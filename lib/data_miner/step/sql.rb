@@ -1,6 +1,6 @@
 require 'csv'
 require 'tmpdir'
-require 'posix/spawn'
+#require 'posix/spawn'
 require 'unix_utils'
 
 class DataMiner
@@ -25,7 +25,7 @@ class DataMiner
       # String containing the SQL.
       # @return [String]
       attr_reader :statement
-      
+
       # @private
       def initialize(script, description, url_or_statement, ignored_options = nil)
         @script = script
@@ -66,7 +66,7 @@ class DataMiner
         else
           [ '--host', config.fetch(:host, '127.0.0.1'), '--port', config.fetch(:port, 3306).to_s ]
         end
-        
+
         argv = [
           'mysql',
           '--compress',
@@ -78,7 +78,12 @@ class DataMiner
         ].flatten
 
         File.open(path) do |f|
-          pid = POSIX::Spawn.spawn(*(argv+[{:in => f}]))
+          pid = nil
+          if posix_spawn_available?
+            pid = POSIX::Spawn.spawn(*(argv+[{:in => f}]))
+          else
+            pid = ::Process.spawn(*(argv+[{:in => f}]))
+          end
           ::Process.waitpid pid
         end
         unless $?.success?
@@ -103,7 +108,7 @@ class DataMiner
           '--dbname', config[:database],
           '--file',   path
         ].flatten
-        
+
         child = POSIX::Spawn::Child.new(*argv)
         $stderr.puts child.out
         $stderr.puts child.err
@@ -126,6 +131,15 @@ class DataMiner
           raise RuntimeError, %{[data_miner] Failed: "cat #{path} | #{argv.join(' ')}"}
         end
         nil
+      end
+
+      def posix_spawn_available?
+        @posix_spawn_available ||= begin
+                                     require 'posix/spawn'
+                                     true
+                                   rescue LoadError => e
+                                     false
+                                   end
       end
     end
   end

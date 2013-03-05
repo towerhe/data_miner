@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'errata', '>=1.0.1'
   s.add_runtime_dependency 'remote_table', '>=2.0.2'
   s.add_runtime_dependency 'upsert', '>=0.3.1'
-  s.add_runtime_dependency 'posix-spawn'
+  s.add_runtime_dependency 'posix-spawn' unless RUBY_PLATFORM == 'java'
   s.add_runtime_dependency 'unix_utils'
   s.add_runtime_dependency 'roo', '1.10.1'
 
@@ -37,7 +37,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest-reporters'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'yard'
-  s.add_development_dependency 'rdiscount'
   if RUBY_PLATFORM == 'java'
     s.add_development_dependency 'jruby-openssl'
     s.add_development_dependency 'activerecord-jdbcsqlite3-adapter'
@@ -47,5 +46,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'sqlite3'
     s.add_development_dependency 'mysql2'
     s.add_development_dependency 'pg'
+    s.add_development_dependency 'rdiscount'
   end
 end
