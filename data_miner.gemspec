@@ -4,8 +4,8 @@ require File.expand_path("../lib/data_miner/version", __FILE__)
 Gem::Specification.new do |s|
   s.name        = "data_miner"
   s.version     = DataMiner::VERSION
-  s.authors     = ["Seamus Abshere", "Andy Rossmeissl", "Derek Kastner"]
-  s.email       = ["seamus@abshere.net"]
+  s.authors     = ["Seamus Abshere", "Andy Rossmeissl", "Derek Kastner", "Ian Hough", "Tower He"]
+  s.email       = ["seamus@abshere.net", "rossmeissl@gmail.com", "dkastner@gmail.com", "ijhough@gmail.com", "towerhe@gmail.com"]
   s.homepage    = "https://github.com/seamusabshere/data_miner"
   s.summary     = %{Download, pull out of a ZIP/TAR/GZ/BZ2 archive, parse, correct, and import XLS, ODS, XML, CSV, HTML, etc. into your ActiveRecord models.}
   s.description = %q{Download, pull out of a ZIP/TAR/GZ/BZ2 archive, parse, correct, and import XLS, ODS, XML, CSV, HTML, etc. into your ActiveRecord models. You can also convert units.}
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_runtime_dependency 'aasm'
-  s.add_runtime_dependency 'active_record_inline_schema', '>=0.5.6'
+  s.add_runtime_dependency 'active_record_inline_schema', '>=0.6.1'
   s.add_runtime_dependency 'activerecord', '> 3'
   s.add_runtime_dependency 'activesupport', '> 3'
   s.add_runtime_dependency 'errata', '>=1.0.1'
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'upsert', '>=0.3.1'
   s.add_runtime_dependency 'posix-spawn' unless RUBY_PLATFORM == 'java'
   s.add_runtime_dependency 'unix_utils'
-  s.add_runtime_dependency 'roo', '1.10.1'
+  s.add_runtime_dependency 'roo', '>=1.10.3'
 
   s.add_development_dependency 'dkastner-alchemist'
   s.add_development_dependency 'conversions'
